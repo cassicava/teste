@@ -334,7 +334,6 @@ footer button.feedback {
   align-items: center;
 }
 
-/* MUDANÇA APLICADA AQUI */
 #valor-total-popup-valor {
     background-color: #f1f1f1;
     color: #333;
@@ -344,29 +343,25 @@ footer button.feedback {
     display: inline-block;
 }
 
-.popup-buttons {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-  gap: 10px;
-}
-
-.popup-buttons button {
+/* MUDANÇA APLICADA AQUI: Estilo para o botão dinâmico */
+.btn-esvaziar-estilo {
   padding: 10px 15px;
   border-radius: 15px;
   border: none;
   font-size: 1em;
   font-weight: bold;
   cursor: pointer;
-}
-
-#btn-esvaziar {
   background-color: crimson;
   color: white;
+  width: 100%;
+  margin-top: 20px; /* Espaçamento acima do botão */
+  transition: background-color 0.2s ease;
 }
-#btn-esvaziar:hover {
+
+.btn-esvaziar-estilo:hover {
   background-color: darkred;
 }
+
 
 /* BOTÃO DE ENVIAR */
 #btn-enviar {
