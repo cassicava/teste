@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roldão Pastel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Roldão Pastel</h1>
+  <p>Cardápio</p>
+</header>
+
+<nav id="menu-categorias">
+  <a href="#pastel_salgado">Salgado</a>
+  <a href="#pastel_especial">Especial</a>
+  <a href="#pastel_doce">Doce</a>
+  <a href="#bebidas">Bebidas</a>
+</nav>
+
+<main>
+  <section class="tipos">
+    <h2 id="pastel_salgado">PASTÉIS SALGADOS</h2>
+    <div id="lista-produtos-salgados"></div>
+  </section>
+
+  <section class="tipos">
+    <h2 id="pastel_especial">PASTÉIS ESPECIAIS</h2>
+    <div id="lista-produtos-especiais"></div>
+  </section>
+
+  <section class="tipos">
+    <h2 id="pastel_doce">PASTÉIS DOCES</h2>
+    <div id="lista-produtos-doces"></div>
+  </section>
+
+  <section class="tipos">
+    <h2 id="bebidas">BEBIDAS</h2>
+    <div id="lista-produtos-bebidas"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="carrinho-info">
+    <span>Total: R$ <span id="valor-total">0,00</span></span>
+    <button id="btn-finalizar">Ver Carrinho (<span id="quantidade-carrinho">0</span>)</button>
+  </div>
+</footer>
+
+<div id="popup-carrinho">
+  <div class="popup-conteudo">
+    <button id="btn-fechar">X</button>
+    <h2>Seu Pedido</h2>
+    
+    <div id="lista-carrinho"></div>
+    <div id="valor-total-popup">
+        Total: <span id="valor-total-popup-valor">R$ 0,00</span>
+    </div>
+
+    <hr>
+
+    <div class="campo-form">
+      <label for="nome-cliente">Seu Nome:</label>
+      <input type="text" id="nome-cliente" placeholder="Digite seu nome" required>
+    </div>
+
+    <div class="campo-form">
+        <label>Tipo de Pedido:</label>
+        <div class="radio-group">
+            <input type="radio" id="tipo-entrega" name="tipo-pedido" value="entrega">
+            <label for="tipo-entrega">Entrega</label>
+            <input type="radio" id="tipo-retirada" name="tipo-pedido" value="retirada">
+            <label for="tipo-retirada">Retirada no Local</label>
+        </div>
+    </div>
+
+    <div id="campos-entrega-container" style="display: none;">
+        <div class="campo-form">
+            <label for="endereco-cliente">Seu Endereço:</label>
+            <input type="text" id="endereco-cliente" placeholder="Rua, número, bairro" required>
+        </div>
+        <div class="campo-form">
+            <label>Forma de Pagamento:</label>
+            <div class="radio-group">
+                <input type="radio" id="pagamento-dinheiro" name="forma-pagamento" value="dinheiro">
+                <label for="pagamento-dinheiro">Dinheiro</label>
+                <input type="radio" id="pagamento-cartao" name="forma-pagamento" value="cartao">
+                <label for="pagamento-cartao">Cartão</label>
+            </div>
+        </div>
+        <div class="campo-form" id="campo-troco-container" style="display: none;">
+            <label for="troco-pedido">Precisa de troco para quanto?</label>
+            <input type="number" id="troco-pedido" placeholder="Ex: 50 (deixe em branco se não precisar)">
+        </div>
+    </div>
+    
+    <div class="popup-buttons">
+      <button id="btn-esvaziar">Esvaziar Carrinho</button>
+    </div>
+     <button id="btn-enviar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        <span>Finalizar Pedido</span>
+    </button>
+  </div>
+</div>
+
+<script>
+const produtos = {
+  salgados: [
+    { nome: "Frango", preco: 13 },
+    { nome: "Carne e Queijo", preco: 13 },
+    { nome: "Carne e Catupiry", preco: 13 },
+    { nome: "Frango e Queijo", preco: 14 },
+    { nome: "Frango e Catupiry", preco: 14 },
+    { nome: "Frango c/ Palmito", preco: 16 },
+    { nome: "Bauru", preco: 13 },
+    { nome: "Pizza", preco: 13 },
+    { nome: "Queijo", preco: 12 },
+    { nome: "Queijo e Catupiry", preco: 13 },
+    { nome: "Palmito", preco: 15 },
+    { nome: "Palmito com Queijo", preco: 16 },
+    { nome: "Palmito com Catupiry", preco: 16 },
+    { nome: "Cigarrete", preco: 9 },
+    { nome: "Baianinho", preco: 12 },
+    { nome: "Baianinho Queijo", preco: 13 },
+    { nome: "Baianinho Catupiry", preco: 13 },
+    { nome: "Calabresa", preco: 12 },
+    { nome: "Calabresa Queijo", preco: 13 },
+    { nome: "Calabresa Catupiry", preco: 13 },
+    { nome: "Creme de Milho", preco: 12 },
+    { nome: "Co-Có-Ri-Có", preco: 16 },
+    { nome: "Napolitano", preco: 14 },
+    { nome: "Hambúrguer", preco: 14 },
+    { nome: "Hot-Dog", preco: 16 },
+    { nome: "Quatro Queijos", preco: 16 },
+    { nome: "Português", preco: 16 }
+  ],
+  especiais: [
+    { nome: "Especial de Carne", preco: 35 },
+    { nome: "Especial de Frango", preco: 35 },
+    { nome: "Especial de Palmito", preco: 35 },
+    { nome: "Especial de Português", preco: 35 },
+    { nome: "Especial de Calabresa", preco: 35 },
+    { nome: "Especial de Baianinho", preco: 35 },
+    { nome: "Especial de Co-Có-Ri-Có", preco: 35 },
+    { nome: "Especial de Carne Seca", preco: 40 }
+  ],
+  doces: [
+    { nome: "Sonho de Valsa", preco: 16 },
+    { nome: "Ouro Branco", preco: 16 },
+    { nome: "Chocolate", preco: 15 },
+    { nome: "Chocolate Branco", preco: 15 },
+    { nome: "Café com Leite", preco: 15 },
+    { nome: "Brigadeiro", preco: 15 },
+    { nome: "Beijinho", preco: 15 },
+    { nome: "Doce de Leite", preco: 15 },
+    { nome: "Doce de Leite com Queijo", preco: 15 },
+    { nome: "Doce de Leite com Coco", preco: 15 },
+    { nome: "Romeu e Julieta", preco: 15 },
+    { nome: "Prestígio", preco: 15 },
+    { nome: "Suflair", preco: 20 },
+    { nome: "Kit Kat", preco: 20 },
+    { nome: "Nutella", preco: 20 },
+    { nome: "Ovomaltine", preco: 20 },
+    { nome: "Chocobacon", preco: 15 }
+  ],
+  // MUDANÇA APLICADA AQUI (Abreviações)
+  bebidas: [
+    { nome: "Refri 2L Coca-Cola", preco: 14 },
+    { nome: "Refri 2L Guaraná Antártica", preco: 13 },
+    { nome: "Refri 1L Guaraná Antártica", preco: 8.5 },
+    { nome: "Refri 2L Fanta", preco: 13 },
+    { nome: "Refri 2L Jaboti", preco: 8.5 },
+    { nome: "Refri Lata", preco: 6.5 },
+    { nome: "Refri 600ml", preco: 8 },
+    { nome: "Suco Garrafinha 450ml", preco: 4.5 },
+    { nome: "H2O", preco: 7.5 },
+    { nome: "Schweppes", preco: 6.5 },
+    { nome: "Água Mineral", preco: 4 },
+    { nome: "Água Tônica", preco: 7 },
+    { nome: "Cerveja Lata (Skol, Boa, Brahma)", preco: 6 },
+    { nome: "Cerveja Lata Subzero", preco: 5 }
+  ]
+};
+
+// --- ELEMENTOS DA DOM ---
+const listaCarrinho = document.getElementById('lista-carrinho');
+const valorTotal = document.getElementById('valor-total');
+const quantidadeCarrinho = document.getElementById('quantidade-carrinho');
+const valorTotalPopup = document.getElementById('valor-total-popup');
+// MUDANÇA APLICADA AQUI
+const valorTotalPopupValor = document.getElementById('valor-total-popup-valor');
+const popup = document.getElementById('popup-carrinho');
+const btnFinalizar = document.getElementById('btn-finalizar');
+const btnFechar = document.getElementById('btn-fechar');
+const btnEnviar = document.getElementById('btn-enviar');
+const btnEsvaziar = document.getElementById('btn-esvaziar');
+let carrinho = [];
+// --- FIM ELEMENTOS DA DOM ---
+
+
+// --- FUNÇÕES DE LÓGICA DO CARRINHO ---
+function adicionarProduto(nome, preco) {
+  const existente = carrinho.find(item => item.nome === nome);
+  if (existente) {
+    existente.quantidade++;
+  } else {
+    carrinho.push({ nome, preco, quantidade: 1 });
+  }
+  btnFinalizar.classList.add('feedback');
+  setTimeout(() => btnFinalizar.classList.remove('feedback'), 500);
+  atualizarCarrinho();
+}
+
+function removerProduto(nome) {
+  const existente = carrinho.find(item => item.nome === nome);
+  if (existente) {
+    existente.quantidade--;
+    if (existente.quantidade <= 0) {
+      carrinho = carrinho.filter(item => item.nome !== nome);
+    }
+    atualizarCarrinho();
+  }
+}
+
+function calcularTotal() {
+  return carrinho.reduce((total, item) => total + item.preco * item.quantidade, 0);
+}
+
+function atualizarCarrinho() {
+  const total = calcularTotal();
+  const totalItens = carrinho.reduce((sum, item) => sum + item.quantidade, 0);
+  valorTotal.innerText = total.toFixed(2).replace('.',',');
+  // MUDANÇA APLICADA AQUI
+  valorTotalPopupValor.innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
+  quantidadeCarrinho.innerText = totalItens;
+  salvarCarrinhoNoLocalStorage();
+}
+// --- FIM FUNÇÕES DE LÓGICA DO CARRINHO ---
+
+
+// --- FUNÇÕES DE MANIPULAÇÃO DA TELA (UI) ---
+function pegarQuantidade(nome) {
+  const item = carrinho.find(p => p.nome === nome);
+  return item ? item.quantidade : 0;
+}
+
+function atualizarQuantidadeProdutosNaTela() {
+  document.querySelectorAll('.produtos[data-nome]').forEach(div => {
+    const nome = div.getAttribute('data-nome');
+    const quantidade = pegarQuantidade(nome);
+    const span = div.querySelector('.quantidade');
+    if (span) span.textContent = quantidade;
+  });
+}
+
+function criarProduto(produto, container) {
+  const div = document.createElement('div');
+  div.classList.add('produtos');
+  div.setAttribute('data-nome', produto.nome);
+  div.setAttribute('data-preco', produto.preco);
+  div.innerHTML = `
+    <div class="topo-produto">
+      <h4>${produto.nome}</h4>
+      <div class="preco-controle">
+        <h6>R$ ${produto.preco.toFixed(2).replace('.',',')}</h6>
+        <div class="controle-quantidade">
+          <button class="diminuir">-</button>
+          <span class="quantidade">0</span>
+          <button class="aumentar">+</button>
+        </div>
+      </div>
+    </div>`;
+  container.appendChild(div);
+  div.querySelector(".aumentar").addEventListener("click", () => {
+    adicionarProduto(produto.nome, produto.preco);
+    div.querySelector(".quantidade").textContent = pegarQuantidade(produto.nome);
+  });
+  div.querySelector(".diminuir").addEventListener("click", () => {
+    removerProduto(produto.nome);
+    div.querySelector(".quantidade").textContent = pegarQuantidade(produto.nome);
+  });
+}
+
+function mostrarCarrinho() {
+  listaCarrinho.innerHTML = '';
+  if (carrinho.length === 0) {
+    listaCarrinho.innerHTML = `<p class="carrinho-vazio">Seu carrinho está vazio.</p>`;
+  } else {
+    carrinho.forEach((item, index) => {
+      const div = document.createElement('div');
+      div.classList.add('item-carrinho', 'fade-in');
+      div.innerHTML = `
+        <span>
+          ${item.quantidade}x ${item.nome}
+          <span class="preco-item">R$ ${item.preco.toFixed(2).replace('.',',')}</span>
+        </span>
+        <div class="controle-quantidade">
+          <button onclick="alterarQuantidade(${index}, -1)" class="diminuir">-</button>
+          <span>${item.quantidade}</span>
+          <button onclick="alterarQuantidade(${index}, 1)" class="aumentar">+</button>
+        </div>
+      `;
+      listaCarrinho.appendChild(div);
+    });
+  }
+  popup.classList.add('show');
+}
+
+function alterarQuantidade(index, delta) {
+  carrinho[index].quantidade += delta;
+  if (carrinho[index].quantidade <= 0) {
+    carrinho.splice(index, 1);
+  }
+  mostrarCarrinho();
+  atualizarCarrinho();
+  atualizarQuantidadeProdutosNaTela();
+}
+// --- FIM FUNÇÕES DE MANIPULAÇÃO DA TELA (UI) ---
+
+
+// --- FUNÇÕES DE LOCALSTORAGE ---
+function salvarCarrinhoNoLocalStorage() {
+  localStorage.setItem('carrinhoRoldaoPastel', JSON.stringify(carrinho));
+}
+
+function carregarCarrinhoDoLocalStorage() {
+  const carrinhoSalvo = localStorage.getItem('carrinhoRoldaoPastel');
+  if (carrinhoSalvo) {
+    carrinho = JSON.parse(carrinhoSalvo);
+    atualizarCarrinho();
+    atualizarQuantidadeProdutosNaTela();
+  }
+}
+// --- FIM FUNÇÕES DE LOCALSTORAGE ---
+
+
+// --- LÓGICA DO FORMULÁRIO DINÂMICO ---
+const tipoPedidoRadios = document.querySelectorAll('input[name="tipo-pedido"]');
+const camposEntregaContainer = document.getElementById('campos-entrega-container');
+const formaPagamentoRadios = document.querySelectorAll('input[name="forma-pagamento"]');
+const campoTrocoContainer = document.getElementById('campo-troco-container');
+
+tipoPedidoRadios.forEach(radio => {
+  radio.addEventListener('change', (event) => {
+    if (event.target.value === 'entrega') {
+      camposEntregaContainer.style.display = 'flex';
+    } else {
+      camposEntregaContainer.style.display = 'none';
+    }
+  });
+});
+
+formaPagamentoRadios.forEach(radio => {
+  radio.addEventListener('change', (event) => {
+    if (event.target.value === 'dinheiro') {
+      campoTrocoContainer.style.display = 'flex';
+    } else {
+      campoTrocoContainer.style.display = 'none';
+    }
+  });
+});
+// --- FIM LÓGICA DO FORMULÁRIO DINÂMICO ---
+
+
+// --- EVENT LISTENERS GERAIS ---
+document.addEventListener('DOMContentLoaded', () => {
+  carregarCarrinhoDoLocalStorage();
+  Object.keys(produtos).forEach(categoria => {
+    const container = document.getElementById(`lista-produtos-${categoria}`);
+    if (container) {
+      produtos[categoria].forEach(produto => criarProduto(produto, container));
+    }
+  });
+  atualizarQuantidadeProdutosNaTela();
+});
+
+btnFinalizar.addEventListener('click', mostrarCarrinho);
+btnFechar.addEventListener('click', () => popup.classList.remove('show'));
+
+btnEsvaziar.addEventListener('click', () => {
+  if (confirm("Tem certeza que deseja remover todos os itens do carrinho?")) {
+    carrinho = [];
+    atualizarCarrinho();
+    mostrarCarrinho();
+    atualizarQuantidadeProdutosNaTela();
+  }
+});
+
+btnEnviar.addEventListener('click', () => {
+  const nomeCliente = document.getElementById('nome-cliente').value.trim();
+  const tipoPedidoRadio = document.querySelector('input[name="tipo-pedido"]:checked');
+
+  if (carrinho.length === 0) {
+    alert("Seu carrinho está vazio!");
+    return;
+  }
+  if (!nomeCliente) {
+    alert("Por favor, preencha seu nome.");
+    return;
+  }
+  if (!tipoPedidoRadio) {
+    alert("Por favor, selecione o tipo de pedido (Entrega ou Retirada).");
+    return;
+  }
+  
+  const tipoPedido = tipoPedidoRadio.value;
+  let mensagem = `*NOVO PEDIDO - ROLDÃO PASTEL*\n\n`;
+  mensagem += `*Cliente:* ${nomeCliente}\n`;
+
+  if (tipoPedido === 'entrega') {
+    const endereco = document.getElementById('endereco-cliente').value.trim();
+    const formaPagamentoRadio = document.querySelector('input[name="forma-pagamento"]:checked');
+    
+    if (!endereco) {
+      alert("Por favor, preencha seu endereço para entrega.");
+      return;
+    }
+    if (!formaPagamentoRadio) {
+      alert("Por favor, selecione a forma de pagamento.");
+      return;
+    }
+    
+    const formaPagamento = formaPagamentoRadio.value;
+    mensagem += `*Tipo de Pedido:* ENTREGA\n`;
+    mensagem += `*Endereço:* ${endereco}\n\n`;
+    mensagem += `*Itens do Pedido:*\n`;
+    carrinho.forEach(p => {
+      mensagem += `- ${p.quantidade}x ${p.nome}\n`;
+    });
+    const total = calcularTotal();
+    mensagem += `\n*Total: R$ ${total.toFixed(2).replace('.',',')}*\n`;
+    mensagem += `*Pagamento:* ${formaPagamento === 'dinheiro' ? 'Dinheiro' : 'Cartão'}\n`;
+
+    if (formaPagamento === 'dinheiro') {
+      const trocoPara = parseFloat(document.getElementById('troco-pedido').value);
+      if (trocoPara && trocoPara >= total) {
+        const troco = trocoPara - total;
+        mensagem += `*Levar troco para R$ ${trocoPara.toFixed(2).replace('.',',')}* (Troco: R$ ${troco.toFixed(2).replace('.',',')})\n`;
+      } else if (trocoPara && trocoPara < total) {
+        alert("O valor para troco não pode ser menor que o total do pedido.");
+        return;
+      }
+    }
+  } else { // Retirada
+    mensagem += `*Tipo de Pedido:* RETIRADA NO LOCAL\n\n`;
+    mensagem += `*Itens do Pedido:*\n`;
+    carrinho.forEach(p => {
+      mensagem += `- ${p.quantidade}x ${p.nome}\n`;
+    });
+    const total = calcularTotal();
+    mensagem += `\n*Total: R$ ${total.toFixed(2).replace('.',',')}*\n`;
+  }
+  
+  const originalButtonHTML = btnEnviar.innerHTML;
+  btnEnviar.innerHTML = 'Enviando...';
+  btnEnviar.disabled = true;
+
+  setTimeout(() => {
+    const url = `https://wa.me/5516997110599?text=${encodeURIComponent(mensagem)}`;
+    window.open(url, '_blank');
+    
+    carrinho = [];
+    atualizarCarrinho();
+    atualizarQuantidadeProdutosNaTela();
+    localStorage.removeItem('carrinhoRoldaoPastel');
+    
+    popup.classList.remove('show');
+    btnEnviar.innerHTML = originalButtonHTML;
+    btnEnviar.disabled = false;
+  }, 500);
+});
+// --- FIM EVENT LISTENERS GERAIS ---
+</script>
+
+<div class="autor">
+  <p>Desenvolvido por <a href="https://wa.me/5516988472113" target="_blank">Cassiano - WhatsApp</a></p>
+</div>
+</body>
+</html>
