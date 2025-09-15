@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
 
+/* --- CORREÇÃO APLICADA AQUI --- */
+html {
+  background-color: #f1f1f1; /* Garante que o fundo da página raiz tenha a mesma cor do popup */
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -343,7 +348,6 @@ footer button.feedback {
     display: inline-block;
 }
 
-/* MUDANÇA APLICADA AQUI: Estilo para o botão dinâmico */
 .btn-esvaziar-estilo {
   padding: 10px 15px;
   border-radius: 15px;
@@ -354,7 +358,7 @@ footer button.feedback {
   background-color: crimson;
   color: white;
   width: 100%;
-  margin-top: 20px; /* Espaçamento acima do botão */
+  margin-top: 20px; 
   transition: background-color 0.2s ease;
 }
 
