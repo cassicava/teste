@@ -20,9 +20,8 @@ body {
   min-height: 100vh;
 }
 
-/* --- MUDANÇA PARA CORREÇÃO DE SCROLL --- */
 body.popup-aberto {
-  overflow: hidden; /* Impede a rolagem do corpo da página quando o popup está aberto */
+  overflow: hidden; 
 }
 
 
@@ -70,8 +69,7 @@ nav a.active::after {
 main {
   flex: 1;
   padding: 20px;
-  /* --- MUDANÇA PARA CORREÇÃO DE ESPAÇAMENTO --- */
-  padding-bottom: 120px; /* Garante que o rodapé flutuante não cubra o último item do cardápio */
+  padding-bottom: 120px; 
 }
 
 section.tipos {
@@ -190,6 +188,7 @@ footer button.feedback {
 }
 
 
+/* --- MUDANÇA PARA CORREÇÃO DE SCROLL: ANIMAÇÃO REMOVIDA --- */
 /* POPUP */
 #popup-carrinho {
   position: fixed;
@@ -198,20 +197,16 @@ footer button.feedback {
   width: 100%;
   height: 100%;
   background: #f1f1f1;
-  display: block;
+  display: none; /* Retornou para 'none' para um controle simples */
   opacity: 0;
   z-index: 1000;
   overflow-y: auto;
-  pointer-events: none;
-  transform: scale(0.95);
-  transform-origin: 50% 100%;
-  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.2s ease; /* Transição suave apenas na opacidade */
 }
 
 #popup-carrinho.show {
+  display: block;
   opacity: 1;
-  pointer-events: auto;
-  transform: scale(1);
 }
 
 .popup-conteudo {
@@ -226,14 +221,7 @@ footer button.feedback {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
-}
-
-#popup-carrinho.show .popup-conteudo {
-    opacity: 1;
-    transform: translateY(0);
+  /* Animação do conteúdo interno removida para consistência */
 }
 
 
@@ -429,20 +417,6 @@ footer button.feedback {
 }
 
 
-/* ANIMAÇÕES E ESTADOS */
-.fade-in {
-  opacity: 0;
-  transform: translateY(5px);
-  animation: aparecer 0.2s forwards ease-in-out;
-}
-
-@keyframes aparecer {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .carrinho-vazio {
   text-align: center;
   font-size: 1.2em;
@@ -450,13 +424,18 @@ footer button.feedback {
   margin-top: 25px;
 }
 
+/* --- MUDANÇA: ESTILO DO CARD DE ASSINATURA --- */
 .autor {
   text-align: center;
-  padding: 15px;
-  background-color: #f8f8f8;
+  padding: 12px 24px;
+  background-color: #ffffff;
   font-size: 0.9em;
   color: #333;
-  border-top: 1px solid #ccc;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  width: fit-content; /* Faz o card se ajustar ao conteúdo */
+  margin: 20px auto 0 auto; /* Centraliza o card */
 }
 
 .autor a {
