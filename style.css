@@ -65,11 +65,12 @@ nav a.active::after {
   left: 0;
 }
 
+/* --- MUDANÇA PARA CORREÇÃO DE BUG --- */
 /* MAIN */
 main {
   flex: 1;
   padding: 20px;
-  padding-bottom: 120px; 
+  /* O padding-bottom foi removido pois não é mais necessário com o footer sticky */
 }
 
 section.tipos {
@@ -138,15 +139,16 @@ section.tipos h2 {
   background: #ff4d4d;
 }
 
-/* FOOTER FLUTUANTE */
+/* --- MUDANÇA PARA CORREÇÃO DE BUG: LAYOUT DO FOOTER REFEITO --- */
+/* FOOTER STICKY */
 footer {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 500px;
+  position: sticky; /* Retornou para 'sticky' - a solução mais estável */
+  bottom: 0;
   z-index: 99;
+  width: 100%;
+  padding: 20px 0; /* Espaçamento para o card "flutuar" acima da base */
+  background: transparent; /* O container principal é invisível */
+  pointer-events: none; /* Permite clicar através do container invisível */
 }
 
 footer .carrinho-info {
@@ -157,12 +159,15 @@ footer .carrinho-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto; /* Centraliza o card visível */
   padding: 12px 20px;
   font-size: 1.1em;
   color: black;
   font-weight: bold;
   border-radius: 50px;
+  pointer-events: auto; /* Habilita o clique apenas no card visível */
 }
 
 footer button {
@@ -188,7 +193,6 @@ footer button.feedback {
 }
 
 
-/* --- MUDANÇA PARA CORREÇÃO DE SCROLL: ANIMAÇÃO REMOVIDA --- */
 /* POPUP */
 #popup-carrinho {
   position: fixed;
@@ -197,11 +201,11 @@ footer button.feedback {
   width: 100%;
   height: 100%;
   background: #f1f1f1;
-  display: none; /* Retornou para 'none' para um controle simples */
+  display: none;
   opacity: 0;
   z-index: 1000;
   overflow-y: auto;
-  transition: opacity 0.2s ease; /* Transição suave apenas na opacidade */
+  transition: opacity 0.2s ease;
 }
 
 #popup-carrinho.show {
@@ -221,9 +225,7 @@ footer button.feedback {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  /* Animação do conteúdo interno removida para consistência */
 }
-
 
 .popup-conteudo h2 {
   text-align: center;
@@ -416,7 +418,6 @@ footer button.feedback {
     height: 24px;
 }
 
-
 .carrinho-vazio {
   text-align: center;
   font-size: 1.2em;
@@ -424,7 +425,6 @@ footer button.feedback {
   margin-top: 25px;
 }
 
-/* --- MUDANÇA: ESTILO DO CARD DE ASSINATURA --- */
 .autor {
   text-align: center;
   padding: 12px 24px;
@@ -434,8 +434,8 @@ footer button.feedback {
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  width: fit-content; /* Faz o card se ajustar ao conteúdo */
-  margin: 20px auto 0 auto; /* Centraliza o card */
+  width: fit-content;
+  margin: 20px auto 0 auto;
 }
 
 .autor a {
