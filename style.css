@@ -20,6 +20,11 @@ body {
   min-height: 100vh;
 }
 
+/* --- MUDANÇA PARA CORREÇÃO DE SCROLL --- */
+body.popup-aberto {
+  overflow: hidden; /* Impede a rolagem do corpo da página quando o popup está aberto */
+}
+
 
 header {
   background: linear-gradient(135deg, crimson, darkred);
@@ -65,6 +70,8 @@ nav a.active::after {
 main {
   flex: 1;
   padding: 20px;
+  /* --- MUDANÇA PARA CORREÇÃO DE ESPAÇAMENTO --- */
+  padding-bottom: 120px; /* Garante que o rodapé flutuante não cubra o último item do cardápio */
 }
 
 section.tipos {
@@ -133,14 +140,14 @@ section.tipos h2 {
   background: #ff4d4d;
 }
 
-/* MUDANÇA APLICADA AQUI: FOOTER FLUTUANTE */
+/* FOOTER FLUTUANTE */
 footer {
-  position: fixed; /* Mudei de 'sticky' para 'fixed' para flutuar sobre o conteúdo */
-  bottom: 20px; /* Distância da base da tela */
+  position: fixed;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 90%; /* Largura do elemento */
-  max-width: 500px; /* Largura máxima */
+  width: 90%;
+  max-width: 500px;
   z-index: 99;
 }
 
@@ -150,14 +157,14 @@ footer .carrinho-info {
   border: 1px solid #ddd;
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
   display: flex;
-  justify-content: space-between; /* Itens separados */
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 12px 20px;
   font-size: 1.1em;
   color: black;
   font-weight: bold;
-  border-radius: 50px; /* Bordas bem arredondadas */
+  border-radius: 50px;
 }
 
 footer button {
@@ -191,16 +198,20 @@ footer button.feedback {
   width: 100%;
   height: 100%;
   background: #f1f1f1;
-  display: none;
+  display: block;
   opacity: 0;
   z-index: 1000;
-  transition: opacity 0.3s ease;
   overflow-y: auto;
+  pointer-events: none;
+  transform: scale(0.95);
+  transform-origin: 50% 100%;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #popup-carrinho.show {
-  display: block;
   opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
 }
 
 .popup-conteudo {
@@ -215,7 +226,16 @@ footer button.feedback {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
 }
+
+#popup-carrinho.show .popup-conteudo {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 
 .popup-conteudo h2 {
   text-align: center;
