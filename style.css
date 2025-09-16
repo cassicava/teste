@@ -133,14 +133,14 @@ section.tipos h2 {
   background: #ff4d4d;
 }
 
-/* FOOTER FLUTUANTE */
+/* MUDANÇA APLICADA AQUI: FOOTER FLUTUANTE */
 footer {
-  position: fixed;
-  bottom: 20px;
+  position: fixed; /* Mudei de 'sticky' para 'fixed' para flutuar sobre o conteúdo */
+  bottom: 20px; /* Distância da base da tela */
   left: 50%;
   transform: translateX(-50%);
-  width: 90%;
-  max-width: 500px;
+  width: 90%; /* Largura do elemento */
+  max-width: 500px; /* Largura máxima */
   z-index: 99;
 }
 
@@ -150,14 +150,14 @@ footer .carrinho-info {
   border: 1px solid #ddd;
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Itens separados */
   align-items: center;
   width: 100%;
   padding: 12px 20px;
   font-size: 1.1em;
   color: black;
   font-weight: bold;
-  border-radius: 50px;
+  border-radius: 50px; /* Bordas bem arredondadas */
 }
 
 footer button {
@@ -191,24 +191,16 @@ footer button.feedback {
   width: 100%;
   height: 100%;
   background: #f1f1f1;
-  display: block; /* Mudei de 'none' para 'block' para a animação funcionar */
+  display: none;
   opacity: 0;
   z-index: 1000;
+  transition: opacity 0.3s ease;
   overflow-y: auto;
-  pointer-events: none; /* Impede interação quando invisível */
-
-  /* --- MUDANÇA PARA ANIMAÇÃO (ESTADO INICIAL) --- */
-  transform: scale(0.95); /* Começa um pouco menor */
-  transform-origin: 50% 100%; /* Ponto de origem da animação: centro da base */
-  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #popup-carrinho.show {
+  display: block;
   opacity: 1;
-  pointer-events: auto; /* Permite interação quando visível */
-
-  /* --- MUDANÇA PARA ANIMAÇÃO (ESTADO FINAL) --- */
-  transform: scale(1); /* Cresce para o tamanho normal */
 }
 
 .popup-conteudo {
@@ -223,18 +215,7 @@ footer button.feedback {
   display: flex;
   flex-direction: column;
   gap: 15px;
-
-  /* --- MUDANÇA PARA ANIMAÇÃO (CONTEÚDO INTERNO) --- */
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s; /* Transição com delay de 0.1s */
 }
-
-#popup-carrinho.show .popup-conteudo {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 
 .popup-conteudo h2 {
   text-align: center;
