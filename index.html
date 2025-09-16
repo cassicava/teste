@@ -13,14 +13,14 @@
   <p>Cardápio</p>
 </header>
 
-<nav id="menu-categorias">
-  <a href="#pastel_salgado">Salgado</a>
-  <a href="#pastel_especial">Especial</a>
-  <a href="#pastel_doce">Doce</a>
-  <a href="#bebidas">Bebidas</a>
-</nav>
-
 <main>
+  <nav id="menu-categorias">
+    <a href="#pastel_salgado">Salgado</a>
+    <a href="#pastel_especial">Especial</a>
+    <a href="#pastel_doce">Doce</a>
+    <a href="#bebidas">Bebidas</a>
+  </nav>
+
   <section class="tipos">
     <h2 id="pastel_salgado">PASTÉIS SALGADOS</h2>
     <div id="lista-produtos-salgados"></div>
@@ -40,6 +40,10 @@
     <h2 id="bebidas">BEBIDAS</h2>
     <div id="lista-produtos-bebidas"></div>
   </section>
+
+  <div class="autor">
+    <p>Desenvolvido por <a href="https://wa.me/5516988472113" target="_blank">Cassiano - WhatsApp</a></p>
+  </div>
 </main>
 
 <footer>
@@ -241,7 +245,6 @@ function mostrarCarrinho() {
     };
     listaCarrinho.appendChild(btnEsvaziarDinamico);
   }
-  // --- MUDANÇA PARA CORREÇÃO DE SCROLL ---
   document.body.classList.add('popup-aberto');
   popup.classList.add('show');
 }
@@ -308,7 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
 btnFinalizar.addEventListener('click', mostrarCarrinho);
 
 btnFechar.addEventListener('click', () => {
-  // --- MUDANÇA PARA CORREÇÃO DE SCROLL ---
   document.body.classList.remove('popup-aberto');
   popup.classList.remove('show');
 });
@@ -367,7 +369,6 @@ btnEnviar.addEventListener('click', () => {
     atualizarQuantidadeProdutosNaTela();
     localStorage.removeItem('carrinhoRoldaoPastel');
     
-    // --- MUDANÇA PARA CORREÇÃO DE SCROLL ---
     document.body.classList.remove('popup-aberto');
     popup.classList.remove('show');
     btnEnviar.innerHTML = originalButtonHTML;
@@ -376,8 +377,5 @@ btnEnviar.addEventListener('click', () => {
 });
 </script>
 
-<div class="autor">
-  <p>Desenvolvido por <a href="https://wa.me/5516988472113" target="_blank">Cassiano - WhatsApp</a></p>
-</div>
 </body>
 </html>
