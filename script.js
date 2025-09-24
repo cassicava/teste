@@ -135,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
         atualizarCarrinho();
     }
     
-    // Delegação de eventos para botões de quantidade no carrinho
     listaCarrinho.addEventListener('click', (e) => {
         const index = e.target.dataset.index;
         if (index === undefined) return;
@@ -185,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainContent.addEventListener('scroll', () => {
         let current = '';
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100; // Ajuste de offset
+            const sectionTop = section.offsetTop - 100; 
             if (mainContent.scrollTop >= sectionTop) {
                 current = section.getAttribute('id');
             }
@@ -247,23 +246,18 @@ document.addEventListener('DOMContentLoaded', () => {
             mensagem += `*Tipo de Pedido:* RETIRADA NO LOCAL\n\n*Itens do Pedido:*\n${itensPedido}\n\n*Total: R$ ${total.toFixed(2).replace('.',',')}*`;
         }
         
-        const originalButtonHTML = btnEnviar.innerHTML;
-        btnEnviar.innerHTML = 'Enviando...';
-        btnEnviar.disabled = true;
+        // --- CORREÇÃO APLICADA AQUI ---
+        // 1. Abre o WhatsApp imediatamente
+        const url = `https://wa.me/5516997110599?text=${encodeURIComponent(mensagem)}`;
+        window.open(url, '_blank');
 
-        setTimeout(() => {
-            const url = `https://wa.me/5516997110599?text=${encodeURIComponent(mensagem)}`;
-            window.open(url, '_blank');
-            
-            carrinho = [];
-            atualizarCarrinho();
-            localStorage.removeItem('carrinhoRoldaoPastel');
-            
-            document.body.classList.remove('popup-aberto');
-            popupCarrinho.classList.remove('show');
-            btnEnviar.innerHTML = originalButtonHTML;
-            btnEnviar.disabled = false;
-        }, 500);
+        // 2. Limpa o carrinho e reseta a interface
+        carrinho = [];
+        atualizarCarrinho();
+        localStorage.removeItem('carrinhoRoldaoPastel');
+        
+        document.body.classList.remove('popup-aberto');
+        popupCarrinho.classList.remove('show');
     });
     
     // --- INICIALIZAÇÃO ---
